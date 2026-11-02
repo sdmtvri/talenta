@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="ProASN 2025 - Kuesioner Pengembangan Kompetensi Pegawai ASN SDM TVRI terintegrasi dengan Google Sheets.">
+  <meta name="author" content="SDM TVRI">
+  <title>ProASN 2025 - SDM TVRI</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://sdmtvri.github.io/assets/logotvri.png">
+</head>
+
+<body oncontextmenu="return false;" onselectstart="return false;">
+  <!-- Ambient background glow lights -->
+  <div class="ambient-glow ambient-glow-1"></div>
+  <div class="ambient-glow ambient-glow-2"></div>
+
+  <div class="app-container">
+    <!-- Main Content Area -->
+    <main>
+      <!-- ================================================================
+           PAGE 1: VERIFIKASI NIP & DATA PEGAWAI
+           ================================================================ -->
+      <section id="page-1" class="page-view active">
+        <div class="card">
+          <div class="card-header">
+            <img src="https://sdmtvri.github.io/assets/logotvri.png" alt="Logo TVRI" class="header-logo-tvri">
+            <h2 class="main-title">ProASN 2025</h2>
+          </div>
+
+          <!-- NIP Search Input -->
+          <div class="nip-search-box">
+            <label for="input-nip" class="input-label">Nomor Induk Pegawai (NIP)</label>
+            <div class="input-field-wrapper">
+              <span class="input-icon-prefix">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
+              <input type="text" id="input-nip" class="nip-input" placeholder="Masukkan NIP Anda..." maxlength="20"
+                autocomplete="off" inputmode="numeric">
+              <button id="btn-search-nip" class="btn-search-inside" type="button">
+                <span id="btn-search-text">Cari</span>
+                <span id="btn-search-spinner" class="spinner" style="display: none;"></span>
+                <svg id="btn-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Alert / Error Message -->
+          <div id="nip-alert-box" class="alert-box alert-error" role="alert">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <div id="nip-alert-text">NIP tidak ditemukan dalam database Pegawai.</div>
+          </div>
+
+          <!-- Confirmation Card (Shown when NIP is found) -->
+          <div id="confirmation-container" class="confirmation-section">
+            <div class="profile-card">
+              <div class="profile-badge-status">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Data Pegawai Terverifikasi</span>
+              </div>
+
+              <div class="profile-header">
+                <div id="confirm-avatar" class="profile-avatar">BS</div>
+                <div class="profile-main-info">
+                  <h3 id="confirm-nama">Budi Santoso, S.Kom.</h3>
+                  <div class="profile-nip-tag">NIP. <span id="confirm-nip">198501152010121001</span></div>
+                </div>
+              </div>
+
+              <div class="profile-grid">
+                <div class="profile-info-item">
+                  <div class="info-label">Jabatan</div>
+                  <div id="confirm-jabatan" class="info-val">Pranata Komputer Ahli Muda</div>
+                </div>
+                <div class="profile-info-item">
+                  <div class="info-label">Satuan Kerja (Satker)</div>
+                  <div id="confirm-satker" class="info-val">Satuan Pengawas Intern TVRI</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Confirmation Action Buttons -->
+            <div class="confirmation-actions">
+              <button type="button" id="btn-reset-nip" class="btn-secondary">
+                Reset NIP
+              </button>
+              <button type="button" id="btn-go-page-2" class="btn-primary">
+                <span>Konfirmasi</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           PAGE 2: LEMBAR KUESIONER (RADIO BUTTON OPTIONS)
+           ================================================================ -->
+      <section id="page-2" class="page-view">
+        <!-- Sticky Top Profile & Progress Bar -->
+        <div class="sticky-top-profile">
+          <div class="sticky-profile-header">
+            <div class="user-quick-info">
+              <div id="sticky-avatar" class="user-mini-avatar">BS</div>
+              <div>
+                <div id="sticky-user-name" class="user-quick-name">Budi Santoso, S.Kom.</div>
+                <div class="user-quick-detail">
+                  NIP. <span id="sticky-user-nip">198501152010121001</span> &bull; <span id="sticky-user-satker">Satker
+                    TVRI</span>
+                </div>
+              </div>
+            </div>
+            <div class="progress-stat">
+              <span id="progress-text">0 dari 0 Terjawab</span>
+              <span id="progress-percent">(0%)</span>
+            </div>
+          </div>
+          <div class="progress-bar-container">
+            <div id="progress-bar-fill" class="progress-bar-fill"></div>
+          </div>
+        </div>
+
+        <!-- Questions Dynamic List -->
+        <div id="questions-container" class="questions-list">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+
+        <!-- Page 2 Bottom Actions -->
+        <div class="questionnaire-footer-actions">
+          <div class="footer-action-info">
+            <span id="unanswered-warning" style="display: none; color: #fbbf24;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="vertical-align: -2px;">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              Masih ada <strong id="unanswered-count">0</strong> pertanyaan yang belum dijawab.
+            </span>
+            <span id="all-answered-note" style="display: none; color: #34d399;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="vertical-align: -2px;">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Semua pertanyaan telah lengkap dijawab. Siap dikirim!
+            </span>
+          </div>
+          <div class="footer-action-buttons">
+            <button type="button" id="btn-back-page-1" class="btn-secondary">
+              &larr; Kembali
+            </button>
+            <button type="button" id="btn-open-submit-modal" class="btn-submit" disabled>
+              <span>Kirim Jawaban</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           PAGE 3: SUBMISSION SUCCESS SCREEN
+           ================================================================ -->
+      <section id="page-3" class="page-view">
+        <div class="card success-card">
+          <div class="success-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          </div>
+
+          <h2 class="success-title">Jawaban Berhasil Disimpan!</h2>
+          <p class="success-desc">
+            Terima kasih telah berpartisipasi dalam pengisian Kuesioner ProASN 2025. Data Anda telah tercatat dengan
+            aman pada lembar <strong>Hasil</strong>.
+          </p>
+
+          <div class="receipt-box">
+            <div class="receipt-row">
+              <span class="label">Nama Pegawai</span>
+              <span id="receipt-nama" class="value">-</span>
+            </div>
+            <div class="receipt-row">
+              <span class="label">Nomor Induk Pegawai</span>
+              <span id="receipt-nip" class="value">-</span>
+            </div>
+            <div class="receipt-row">
+              <span class="label">Satuan Kerja</span>
+              <span id="receipt-satker" class="value">-</span>
+            </div>
+            <div class="receipt-row">
+              <span class="label">Waktu Pengiriman</span>
+              <span id="receipt-timestamp" class="value">-</span>
+            </div>
+          </div>
+
+          <div class="close-tab-container">
+            <p class="close-tab-notice">Anda bisa menutup halaman ini.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <div class="footer-copy">&copy; 2026 SDMTVRI</div>
+      <div class="footer-sub">Lembaga Penyiaran Publik Televisi Republik Indonesia</div>
+    </footer>
+  </div>
+
+  <!-- ====================================================================
+       MODAL: KONFIRMASI PENGIRIMAN JAWABAN
+       ==================================================================== -->
+  <div id="modal-confirm-submit" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Konfirmasi Kirim Jawaban</h3>
+        <button type="button" class="modal-close-btn" data-modal="modal-confirm-submit">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Apakah Anda yakin data jawaban kuesioner Anda sudah benar dan siap disimpan ke lembar <strong>Hasil</strong>?
+        </p>
+        <div style="margin-top: 14px; padding: 12px; background: rgba(0,0,0,0.25); border-radius: 8px;">
+          <div>Pegawai: <strong id="modal-confirm-user-nama" style="color:#ffffff;">-</strong></div>
+          <div style="font-size: 0.85rem; color: #94a3b8;">NIP: <span id="modal-confirm-user-nip">-</span></div>
+          <div style="font-size: 0.85rem; color: #94a3b8;">Total Jawaban: <span id="modal-confirm-answer-count">-</span>
+            pertanyaan</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" data-modal="modal-confirm-submit">Batal</button>
+        <button type="button" id="btn-submit-final" class="btn-primary"
+          style="background: linear-gradient(135deg, #10b981, #059669);">
+          <span id="btn-submit-final-text">Ya, Kirim Sekarang</span>
+          <span id="btn-submit-final-spinner" class="spinner" style="display: none;"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="config.js"></script>
+  <script src="mock-data.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
